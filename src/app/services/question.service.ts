@@ -18,4 +18,13 @@ export class QuestionService {
   getall(){
     return this.http.get(this.endpoint.url + 'Question/getall');
   }
+  delete(id:any) {
+    return this.http.delete(this.endpoint.url+'Question/delete/'+id);
+
+  }
+  update(id: any, Questionnew: any){
+
+    return this.http.put(this.endpoint.url + 'Question/update/' + id , Questionnew);
+
+  }
 }

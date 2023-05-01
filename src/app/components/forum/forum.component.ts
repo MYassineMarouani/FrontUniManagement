@@ -4,7 +4,8 @@ import { EnseignantService } from 'src/app/services/enseignant.service';
 import { EtudiantService } from 'src/app/services/etudiant.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { ReponseService } from 'src/app/services/reponse.service';
-
+import { forkJoin } from 'rxjs';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-forum',
   templateUrl: './forum.component.html',
@@ -22,6 +23,11 @@ export class ForumComponent implements OnInit {
   respone12: any;
   Reponsesdetails: any;
   respone123: any;
+  postResponse: string;
+  Questionsofuser: Object;
+  totalResponses: any;
+  questions12: any;
+  totalResponsesByUser: number;
   constructor(private Reponse: ReponseService, private Question: QuestionService, private Etudiant: EtudiantService, private Enseignant: EnseignantService, private endpoint: EndpointService) { }
   Questions: any;
   ngOnInit() {
@@ -66,6 +72,7 @@ export class ForumComponent implements OnInit {
                     this.Userdetails1 = res;
                     // Add the user information to the question object
                     question.user = this.Userdetails1;
+                    question.modify = localStorage.getItem('id');
                     console.log("Etudiant: " + question.user.nom);
                   },
                   err => {
@@ -78,6 +85,7 @@ export class ForumComponent implements OnInit {
                     this.Userdetails1 = res;
                     // Add the user information to the question object
                     question.user = this.Userdetails1;
+                    question.modify = localStorage.getItem('id');
                     console.log("Enseignant: " + question.user.nom);
                   },
                   err => {
@@ -90,39 +98,24 @@ export class ForumComponent implements OnInit {
               console.log("Reponses: ", responses);
               question.responses = responses;
               const responsesArray = Object.values(responses);
-              // working only for studnet replies
-              // const promises = responsesArray.map(async (response) => {
-              //   let user;
-              //   this.Etudiant.getusertype(question.idUser).subscribe(
-              //     async res => {
-              //       this.respone123 = res;
-              //       if (this.respone123.type == 1) {
-              //         user = await this.Etudiant.getbyid(response.idUser).toPromise();
-              //       } else if (this.respone123.type == 2) {
-              //         user = await this.Enseignant.getbyid(response.idUser).toPromise();
-              //       }
-              //       response.user = user;
-              //       console.log(response.user.nom);
-              //     }
-              //   );
-              // });
-              
+
+              // get role 
               const promises = responsesArray.map(async (response) => {
                 let user;
-                let proffesion="Etudiant";
+                let proffesion = "Etudiant";
                 user = await this.Etudiant.getbyid(response.idUser).toPromise();
-                
+
                 if (!user) {
                   user = await this.Enseignant.getbyid(response.idUser).toPromise();
                   proffesion = "Enseignant";
                 }
-              
+
                 response.user = user;
                 response.proffesion = proffesion;
-                console.log("esmou"+response.user.nom+"w howa"+proffesion);
-                
+                console.log("esmou" + response.user.nom + "w howa" + proffesion);
+
               });
-              
+
 
 
 
@@ -141,6 +134,72 @@ export class ForumComponent implements OnInit {
         console.log(err);
       }
     );
+
+
+
+    // get how many questions the user has got 
+
+    this.Question.getQuestionsbyidUser(localStorage.getItem('id')).subscribe(
+      (res: any) => {
+        this.Questionsofuser = res;
+        const observables = res.map((question) =>
+          this.Reponse.getresponsesbyidquestion(question._id)
+        );
+        forkJoin(observables).subscribe(
+          (responses: any[]) => {
+            let totalResponses = responses.reduce(
+              (acc, curr) => acc + curr.length,
+              0
+            );
+            this.totalResponses = totalResponses;
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    // get how many resposnes he got 
+
+
+    this.Question.getall().subscribe(
+      (res: any) => {
+        this.questions12 = res;
+        const observables = [];
+        for (let question of res) {
+          observables.push(this.Reponse.getresponsesbyidquestion(question._id));
+        }
+        forkJoin(observables).subscribe(
+          (responses: any[]) => {
+            let totalResponses1 = 0;
+            for (let responseList of responses) {
+              for (let response of responseList) {
+                if (response.idUser === localStorage.getItem('id')) {
+                  totalResponses1++;
+                }
+              }
+            }
+            console.log('total responses by user:', totalResponses1);
+            this.totalResponsesByUser = totalResponses1; // set a component property to display in HTML
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+
+
+
+
+
+
 
 
 
@@ -166,6 +225,146 @@ export class ForumComponent implements OnInit {
       err => {
         this.err = err;
       })
+    this.ngOnInit();
+  }
+  onSubmitResponse(id: string) {
+
+    const Reponsepost = {
+      Description: this.postResponse,
+      idQuestion: id,
+      idUser: localStorage.getItem('id')
+    }
+    this.Reponse.add(Reponsepost).subscribe(
+      (data) => {
+        console.log("Response succesfully", data);
+
+      },
+      err => {
+        this.err = err;
+        console.log(err)
+      })
+    this.ngOnInit();
+
+  }
+  async modifierquestion(idquestion: string, idUser: string,description:string) {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputValue: description,
+      inputLabel: 'Modifier Question',
+      inputPlaceholder: 'Nouvelle Question...',
+      inputAttributes: {
+        'aria-label': 'Nouvelle Question'
+      },
+      showCancelButton: true
+    });
+    let newdescription = {
+      Description:text
+    }
+
+    if (text) {
+      this.Question.update(idquestion, newdescription).subscribe(
+        res => {
+          console.log("Question updated successfully.");
+          Swal.fire('Modifié!', 'La question a été modifiée.', 'success');
+          // Code to update the UI or show a success message
+          this.ngOnInit();
+        },
+        err => {
+          console.log("Error updating question: ", err);
+          Swal.fire('Erreur', 'Impossible de modifier la question.', 'error');
+          // Code to handle the error or show an error message
+        }
+      );
+    }
+
+    
+
+
+  }
+  supprimerquestion(idquestion: string, idUser: string) {
+    Swal.fire({
+      title: 'Êtes-vous sûr de vouloir supprimer cette question?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, supprimez-la!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked "Yes, delete it"
+        this.Question.delete(idquestion).subscribe(
+          res => {
+            console.log("Question supprimée avec succès.");
+            Swal.fire('Supprimé!', 'La question a été supprimée.', 'success');
+            // Code to update the UI or show a success message
+          },
+          err => {
+            console.log("Erreur lors de la suppression de la question: ", err);
+            Swal.fire('Erreur', 'Impossible de supprimer la question.', 'error');
+            // Code to handle the error or show an error message
+          }
+        );
+      }
+    });
+    this.ngOnInit();
+  }
+  async modifierreponse(idreponse: string, idUser: string,description:string) {
+    const { value: text } = await Swal.fire({
+      input: 'textarea',
+      inputValue: description,
+      inputLabel: 'Modifier Reponse',
+      inputPlaceholder: 'Nouvelle Reponse...',
+      inputAttributes: {
+        'aria-label': 'Nouvelle Reponse'
+      },
+      showCancelButton: true
+    });
+    let newdescription = {
+      Description:text
+    }
+
+    if (text) {
+      this.Reponse.update(idreponse, newdescription).subscribe(
+        res => {
+          console.log("Reponse updated successfully.");
+          Swal.fire('Modifié!', 'La Reponse a été modifiée.', 'success');
+          // Code to update the UI or show a success message
+          this.ngOnInit();
+        },
+        err => {
+          console.log("Error updating Reponse: ", err);
+          Swal.fire('Erreur', 'Impossible de modifier la Reponse.', 'error');
+          // Code to handle the error or show an error message
+        }
+      );
+    }
+
+  }
+  supprimerreponse(idreponse: string, idUser: string) {
+    Swal.fire({
+      title: 'Êtes-vous sûr de vouloir supprimer cette Reponse?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui, supprimez-la!',
+      cancelButtonText: 'Annuler'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User clicked "Yes, delete it"
+        this.Reponse.delete(idreponse).subscribe(
+          res => {
+            console.log("Reponse supprimée avec succès.");
+            Swal.fire('Supprimé!', 'La Reponse a été supprimée.', 'success');
+            // Code to update the UI or show a success message
+          },
+          err => {
+            console.log("Erreur lors de la suppression de la Reponse: ", err);
+            Swal.fire('Erreur', 'Impossible de supprimer la Reponse.', 'error');
+            // Code to handle the error or show an error message
+          }
+        );
+      }
+    });
+    this.ngOnInit();
+
   }
 }
 

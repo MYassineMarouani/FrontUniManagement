@@ -18,4 +18,13 @@ export class ReponseService {
   getall(){
     return this.http.get(this.endpoint.url + 'Reponse/getall');
   }
+  delete(id:any) {
+    return this.http.delete(this.endpoint.url+'Reponse/delete/'+id);
+
+  }
+  update(id: any, Reponsenew: any){
+
+    return this.http.put(this.endpoint.url + 'Reponse/update/' + id , Reponsenew);
+
+  }
 }
