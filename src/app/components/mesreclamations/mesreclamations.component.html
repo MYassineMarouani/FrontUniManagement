@@ -1,0 +1,32 @@
+<br>
+<h3 style="color: black;font-weight: bold;">Mes reclamations : </h3>
+<br>
+<div style="border-style: solid;">
+    <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">État</th>
+
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of Reclamationsall;let ind = index">
+            <th scope="row">{{ind}}</th>
+            <td>{{i.date}}</td>
+            <td>{{i.Description}}</td>
+            <td style="font-weight: bold;"> <span *ngIf="i.etat === 'en cours'" style="color: orange">{{i.etat}}</span>
+              <span *ngIf="i.etat === 'Validé'" style="color: green">{{i.etat}}</span>
+              <span *ngIf="i.etat === 'Non validé'" style="color: red">{{i.etat}}</span></td>
+     
+            <td><button type="button" class="btn btn-warning" (click)="details(i._id)">Détails</button>/
+              <button type="button" class="btn btn-danger" (click)="supprimer(i._id)">Supprimer</button></td>
+          </tr>
+          <!-- Ajouter d'autres lignes du tableau ici -->
+        </tbody>
+      </table>
+      
+</div>

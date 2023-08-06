@@ -1,1 +1,60 @@
-<p>fairereclamation works!</p>
+<div class="gap no-top overlap" style="margin-top: 20px; background-color: darkgray;border-style: solid;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="contct-info">
+                    <div class="contact-form">
+                        <div class="cnt-title">
+                            <span>Faire une reclamation</span>
+                            <i><img src="images/envelop.png" alt=""></i>
+                        </div>
+                        <form method="post">
+                           
+                            <div class="form-group">	
+                              <textarea rows="4" id="textarea" required="required" [(ngModel)]="postContent" name="postContent"></textarea>
+                              <label class="control-label" for="textarea" >Message</label><i class="mtrl-select"></i>
+                            </div>
+                            <div class="form-group">
+                                <label for="imageUpload">Image</label>
+                                <input type="file" (change)="onFileSelected($event)" class="form-control-file" id="imageUpload" name="image">
+                              </div>
+                              
+                            <div class="submit-btns">
+                                <button class="mtr-btn signup" type="button" (click)="onSubmit()"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="cntct-adres">
+                        <h3>Plus d'informations</h3>
+                        <ul>
+                            <li>
+                                <i class="ti-location-pin"></i>
+                                <span>85-87 Rue Palestine 1002 Tunis.</span>
+                            </li>
+                            <li>
+                                <i class="fa fa-mobile-phone"></i>
+                                <span>(216) 71 781 081 <br> (216) 22 022 444</span>
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope-o"></i>
+                                <span><a href="https://wpkixx.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="cba2a5ada48bb2a4beb9a6aaa2a7e5a8a4a6">scolarite@iteam-univ.tn</a></span>
+                            </li>
+                        </ul>
+                        <ul class="social-media">
+                            <li>
+                                <a href="#" title=""><i class="fa fa-facebook-square"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" title=""><i class="fa fa-linkedin-square"></i></a>
+                            </li>
+                            <li>
+                                <a href="#" title=""><i class="fa fa-twitter-square"></i></a>
+                            </li>
+                        </ul>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

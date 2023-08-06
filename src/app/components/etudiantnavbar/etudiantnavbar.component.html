@@ -7,8 +7,8 @@
             <li>
                 <a href="#" title="">Reclamations</a>
                 <ul>
-                    <li><a href="index-2.html" title="">Faire une reclamation</a></li>
-                    <li><a href="index2.html" title="">Mes reclamations</a></li>
+                    <li><a href="/Etudiantdashboard/fairereclamation" title="">Faire une reclamation</a></li>
+                    <li><a href="/Etudiantdashboard/mesreclamations" title="">Mes reclamations</a></li>
 
                 </ul>
             </li>
@@ -36,7 +36,7 @@
                 <a href="#" title="">Cours et Forum</a>
                 <ul>
                     <li><a href="404.html" title="">Consulter les cours</a></li>
-                    <li><a href="404.html" title="">Forum universitaire</a></li>
+                    <li><a href="/Etudiantdashboard/forum" title="">Forum universitaire</a></li>
                 </ul>
             </li>
         </ul>
@@ -201,7 +201,10 @@
                 <a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
                 <a href="#" title=""><i class="ti-target"></i>activity log</a>
                 <a href="#" title=""><i class="ti-settings"></i>account setting</a>
-                <a href="#" title=""><i class="ti-power-off"></i>log out</a>
+                <a href="javascript:void(0)" title="" (click)="logout()">
+                    <i class="ti-power-off"></i> Log out
+                  </a>
+                  
             </div>
         </div>
         <span class="ti-menu main-menu" data-ripple=""></span>

@@ -26,12 +26,12 @@ export class LoginadminComponent implements OnInit {
         this.token = res;
         localStorage.setItem('token', this.token.token);
         console.log(this.token)
-        this.router.navigate(['/admindashboard']);
+        
         let token = localStorage.getItem('token');
         let decodedToken = JSON.parse(window.atob(token.split('.')[1]));
         console.log(decodedToken); // inspect the decoded token in the console
         localStorage.setItem('id', decodedToken.adminId);
-
+        this.router.navigate(['/admindashboard']);
       },
       err => {
         alert(err.error);

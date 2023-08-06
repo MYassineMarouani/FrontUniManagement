@@ -36,6 +36,9 @@ import { DeposercoursComponent } from './components/deposercours/deposercours.co
 import { FaireappelComponent } from './components/faireappel/faireappel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LineBreakPipePipe } from './pipes/line-break-pipe.pipe';
+import { TouslesclassesComponent } from './components/touslesclasses/touslesclasses.component';
+import { CreationclasseComponent } from './components/creationclasse/creationclasse.component';
+import { MesreclamationsComponent } from './components/mesreclamations/mesreclamations.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +73,10 @@ import { LineBreakPipePipe } from './pipes/line-break-pipe.pipe';
     TouslescoursComponent,
     DeposercoursComponent,
     FaireappelComponent,
-    LineBreakPipePipe
+    LineBreakPipePipe,
+    TouslesclassesComponent,
+    CreationclasseComponent,
+    MesreclamationsComponent
   ],
   imports: [
     BrowserModule,

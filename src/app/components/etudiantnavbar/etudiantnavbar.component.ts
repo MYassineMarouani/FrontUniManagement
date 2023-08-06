@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { EndpointService } from 'src/app/services/endpoint.service';
 import { EtudiantService } from 'src/app/services/etudiant.service';
 
@@ -12,7 +13,7 @@ export class EtudiantnavbarComponent implements OnInit {
   respone: any;
   Etudiantdetails: any;
 
-  constructor(private Etudiant: EtudiantService,private endpoint:EndpointService) { }
+  constructor(private Etudiant: EtudiantService,private endpoint:EndpointService, private router:Router) { }
 
   ngOnInit() {
     let id = localStorage.getItem("id");
@@ -27,6 +28,10 @@ export class EtudiantnavbarComponent implements OnInit {
       }
     );
     
+  }
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/LoginEtudiant']);
   }
 }
 

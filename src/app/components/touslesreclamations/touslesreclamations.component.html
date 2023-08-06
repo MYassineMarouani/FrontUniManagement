@@ -1,1 +1,38 @@
-<p>touslesreclamations works!</p>
+<br>
+<h3 style="color: black;font-weight: bold;">Boite de reclamations ( {{filteredReclamations.length}} ) : </h3>
+<br>
+<div style="border-style: solid;">
+  <div style="display: flex; align-items: center;">
+    <button type="button" class="btn btn-dark" (click)="filterReclamations('ALL')">tous</button>
+    <button type="button" class="btn btn-warning" (click)="filterReclamations('en cours')" style="margin-left: 5px;">En Cours</button>
+    <button type="button" class="btn btn-danger" (click)="filterReclamations('Non validé')" style="margin-left: 5px;">Non Validé</button>
+    <button type="button" class="btn btn-success" (click)="filterReclamations('Validé')" style="margin-left: 5px;">Validé</button>
+    <input type="text" class="form-control" placeholder="Rechercher par prenom d'étudiant" [(ngModel)]="searchTerm" (ngModelChange)="filterReclamationsByEtudiant()" style="margin-left: 10px;width: 300px;">
+  </div>
+    <table class="table" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Date de la reclamation</th>
+            <th scope="col">Nom de l'etudiant concerné</th>
+            <th scope="col">État</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of filteredReclamations;let ind = index">
+            <th scope="row">{{ind}}</th>
+            <td>{{i.date}}</td>
+            <td>{{i.nomEtudiant }} {{i.prenomEtudiant }}</td>
+            <td style="font-weight: bold;"> <span *ngIf="i.etat === 'en cours'" style="color: orange">{{i.etat}}</span>
+              <span *ngIf="i.etat === 'Validé'" style="color: green">{{i.etat}}</span>
+              <span *ngIf="i.etat === 'Non validé'" style="color: red">{{i.etat}}</span></td>
+            <td><button type="button" class="btn btn-warning" (click)="details(i._id)">details</button> /
+                <button type="button" class="btn btn-danger" (click)="traiter(i._id)">traiter</button></td>
+          </tr>
+          <!-- Ajouter d'autres lignes du tableau ici -->
+        </tbody>
+      </table>
+
+      
+</div>

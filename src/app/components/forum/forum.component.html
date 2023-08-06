@@ -14,7 +14,7 @@
 											<li>
 												<div class="activity-meta">
 													
-													<span><a  title="">Vous avez posé {{Questionsofuser.length}} questions en totale </a></span>
+													<span><a  title="">Vous avez posé {{length}} questions en totale </a></span>
 													
 												</div>
 											</li>
@@ -43,7 +43,7 @@
 										</figure>
 										<div class="newpst-input">
 											<form>
-												<textarea rows="2" placeholder="write something" [(ngModel)]="postContent" name="postContent"></textarea>
+												<textarea rows="2" placeholder="Ecrire quelque chose..." [(ngModel)]="postContent" name="postContent"></textarea>
 											  <div class="attachments">
 												<ul>
 												  <li>
@@ -53,7 +53,7 @@
 													</label>
 												  </li>
 												  <li>
-													<button type="button" (click)="onSubmit()">Post</button>
+													<button type="button" (click)="onSubmit()">Publier</button>
 												  </li>
 												</ul>
 											  </div>
@@ -84,7 +84,7 @@
 														{{ question.Description }}
 													</p>
 												</div>
-												<span *ngIf="question.modify == question.idUser">
+												<span *ngIf="question.modify == question.idUser || question.modify=='645000c3e1cb7926db2d4778'">
 												<button  (click)="modifierquestion(question._id,question.idUser,question.Description)" type="submit" style="color: black; font-size: small;">Modifier</button> /
 												<button (click)="supprimerquestion(question._id,question.idUser)" type="submit" style="color: black;font-size: small">Supprimer </button>
 											 </span>
@@ -92,7 +92,7 @@
 										</div>
 										<div class="coment-area" >
 											<hr style="background-color: cornflowerblue;">
-											<h6>{{question.responses.length}} Reponses : </h6> <br>
+											<h6>{{question.responses.length}} Reponse(s) : </h6> <br>
 											<ul class="we-comet" >
 												<li *ngFor="let response of question.responses">
 													<div class="comet-avatar">
@@ -101,7 +101,7 @@
 													<div class="we-comment">
 														<div class="coment-head">
 															<h5><a href="time-line.html" title="">{{ response.user.nom }} {{ response.user.prenom }} |  <span style="font-size: small;color: blue;">{{response.proffesion}}</span></a></h5>
-															<span>{{response.date}} 	<span *ngIf="question.modify == response.idUser">
+															<span>{{response.date}} 	<span *ngIf="question.modify == response.idUser || question.modify=='645000c3e1cb7926db2d4778'">
 																<button type="submit" (click)="modifierreponse(response._id,response.idUser,response.Description)" style="color: black;font-size: smaller">Modifier </button>
 															/ <button type="submit" (click)="supprimerreponse(response._id,response.idUser)" style="color: black;font-size: smaller">Supprimer </button>
 															</span> </span>
@@ -121,7 +121,7 @@
 														<form method="post">
 															<textarea placeholder="Post your comment" [(ngModel)]="postResponse" name="postResponse"></textarea>
 							
-															<button type="submit" (click)="onSubmitResponse(question._id)" style="color: black;">Reply</button>
+															<button type="submit" (click)="onSubmitResponse(question._id)" style="color: black;">Repondre</button>
 														</form>	
 													</div>
 												</li>
@@ -136,20 +136,45 @@
 							<div class="col-lg-3">
 								<aside class="sidebar static">
 									<div class="widget">
-										<h4 class="widget-title">Your page</h4>	
+										<h4 class="widget-title">Notifications</h4>	
 										<div class="your-page">
 											<figure>
 												<a href="#" title=""><img  [src]=" endpoint.url + 'getimage/' + Userdetails.Image" width="100"style="height: 60px;" alt=""></a>
 											</figure>
 											<div class="page-meta">
-												<a href="#" title="" class="underline">My page</a>
+												<a href="#" title="" class="underline">Mes notifications</a>
 												<span><i class="ti-comment"></i><a href="insight.html" title="">Messages <em>9</em></a></span>
 												<span><i class="ti-bell"></i><a href="insight.html" title="">Notifications <em>2</em></a></span>
 											</div>
 											
 										</div>
 									</div><!-- page like widget -->
-								
+									
+									<div class="widget">
+										<h4 class="widget-title">Activités récentes</h4>
+										<!-- <ul class="activitiez">
+											<li>
+												<div class="activity-meta">
+													<i>10 hours Ago</i>
+													<span><a title="" href="#">Commented on Video posted </a></span>
+													<h6>by <a href="time-line.html">black demon.</a></h6>
+												</div>
+											</li>
+											<li>
+												<div class="activity-meta">
+													<i>30 Days Ago</i>
+													<span><a title="" href="#">Posted your status. “Hello guys, how are you?”</a></span>
+												</div>
+											</li>
+											<li>
+												<div class="activity-meta">
+													<i>2 Years Ago</i>
+													<span><a title="" href="#">Share a video on her timeline.</a></span>
+													<h6>"<a href="#">you are so funny mr.been.</a>"</h6>
+												</div>
+											</li>
+										</ul> -->
+									</div>
 							
 								</aside>
 							</div><!-- sidebar -->

@@ -26,6 +26,9 @@ import { DeposercoursComponent } from './components/deposercours/deposercours.co
 import { FaireappelComponent } from './components/faireappel/faireappel.component';
 import { TouslesetudiantsComponent } from './components/touslesetudiants/touslesetudiants.component';
 import { CreationetudiantComponent } from './components/creationetudiant/creationetudiant.component';
+import { CreationclasseComponent } from './components/creationclasse/creationclasse.component';
+import { TouslesclassesComponent } from './components/touslesclasses/touslesclasses.component';
+import { MesreclamationsComponent } from './components/mesreclamations/mesreclamations.component';
 
 
 const routes: Routes = [
@@ -45,6 +48,8 @@ const routes: Routes = [
     {path:'detailsenseignant/:_id',component:DetailsenseignantComponent},
     {path:'modifierenseignant/:_id',component:ModifierenseignantComponent},
     {path:'saisienotes',component:SaisienotesComponent},
+    {path:'creationclasse',component:CreationclasseComponent},
+    {path:'touslesclasses',component:TouslesclassesComponent},
     // corriger notes par id etudiant
     {path:'corrigernotes/:_id',component:CorrigernotesComponent},
     {path:'touslesreclamations',component:TouslesreclamationsComponent},
@@ -56,7 +61,7 @@ const routes: Routes = [
     {path:'forum',component:ForumComponent},
     {path:'detailsetudiant/:_id',component:DetailsetudiantComponent},
     {path:'fairereclamation',component:FairereclamationComponent},
-    {path:'touslesreclamations',component:TouslesreclamationsComponent},
+    {path:'mesreclamations',component:MesreclamationsComponent},
     {path:'planning',component:PlanningComponent},
     {path:'touslesnotes',component:TouslesnotesComponent},
     {path:'touslesabsences',component:TouslesabsencesComponent},
@@ -68,7 +73,7 @@ const routes: Routes = [
     {path:'forum',component:ForumComponent},  
     {path:'detailsenseignant/:_id',component:DetailsenseignantComponent},
     {path:'fairereclamation',component:FairereclamationComponent},
-    {path:'touslesreclamations',component:TouslesreclamationsComponent},
+    {path:'mesreclamations',component:MesreclamationsComponent},
     {path:'planning',component:PlanningComponent},
     {path:'deposercours',component:DeposercoursComponent},
     {path:'faireappel',component:FaireappelComponent},

@@ -7,17 +7,17 @@
             <li>
                 <a href="#" title="">Etudiants</a>
                 <ul>
-                    <li><a href="index-2.html" title="">Creation </a></li>
-                    <li><a href="index2.html" title="">Consultation</a></li>
-                    <li><a href="index-company.html" title="">Classes</a></li>
+                    <li><a routerLink="/admindashboard/creationetudiant" title="Create a new student">Creation</a></li>
+                    <li><a routerLink="touslesetudiants" title="">Consultation</a></li>
+                    <li><a routerLink="touslesclasses" title="">Classes</a></li>
     
                 </ul>
             </li>
             <li>
                 <a href="#" title="">Enseignants</a>
                 <ul>
-                    <li><a href="time-line.html" title="">Creation</a></li>
-                    <li><a href="timeline-friends.html" title="">Consultation</a></li>
+                    <li><a routerLink="/admindashboard/creationenseignant" title="">Creation</a></li>
+                    <li><a routerLink="toueslesenseignant" title="">Consultation</a></li>
 
 
                 </ul>
@@ -25,14 +25,21 @@
             <li>
                 <a href="#" title="">Notes</a>
                 <ul>
-                    <li><a href="create-fav-page.html" title="">Saisie</a></li>
+                    <li><a routerLink="saisienotes" title="">Saisie</a></li>
                     <li><a href="edit-account-setting.html" title="">Corriger</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#" title="">Reclamation</a>
                 <ul>
-                    <li><a href="404.html" title="">Boite de reclamations</a></li>
+                    <li><a href="/admindashboard/touslesreclamations"title="">Boite de reclamations</a></li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#" title="">Forum</a>
+                <ul>
+                    <li><a routerLink="forum"  title="">Forum universitaire</a></li>
 
                 </ul>
             </li>
@@ -188,7 +195,7 @@
             </li>
         </ul>
         <div class="user-img">
-            <img src="assets/images/resources/admin.jpg" alt="">
+            <img    alt="">
             <span class="status f-online"></span>
             <div class="user-setting">
                 <a href="#" title=""><span class="status f-online"></span>online</a>
@@ -198,7 +205,9 @@
                 <a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
                 <a href="#" title=""><i class="ti-target"></i>activity log</a>
                 <a href="#" title=""><i class="ti-settings"></i>account setting</a>
-                <a href="#" title=""><i class="ti-power-off"></i>log out</a>
+                <a href="javascript:void(0)" title="" (click)="logout()">
+                    <i class="ti-power-off"></i> Log out
+                  </a>
             </div>
         </div>
         <span class="ti-menu main-menu" data-ripple=""></span>
